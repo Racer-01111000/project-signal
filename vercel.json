@@ -1,0 +1,22 @@
+{
+  "version": 2,
+  "functions": {
+    "api/submit-to-signal.js": {
+      "runtime": "nodejs18.x"
+    }
+  }
+}
+{
+  "routes": [
+    {
+      "src": "/api/submit-to-signal",
+      "methods": ["POST"],
+      "headers": {
+        "Access-Control-Allow-Origin": "*",
+        "cache-control": "no-store"
+      },
+      "dest": "/api/submit-to-signal.js"
+    }
+  ]
+}
+

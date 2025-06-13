@@ -63,15 +63,13 @@
 </head>
 <body>
   <h1>Submit a Signal</h1>
-  <form method="POST" action="https://formspree.io/f/YOUR_FORM_ID">
-    <label for="name">Your Name (optional):</label>
-    <input type="text" id="name" name="name" placeholder="Rick" />
-
-    <label for="message">Your Message to the Future:</label>
-    <textarea id="message" name="message" rows="6" placeholder="Enter your message..."></textarea>
-
-    <button type="submit">Send Message</button>
-  </form>
+<form
+  action="https://formspree.io/f/YOUR_FORM_ID"
+  method="POST"
+>
+  <input type="hidden" name="_redirect" value="https://your-deployment-url.vercel.app/form/thank-you.html" />
+  <!-- your form fields here -->
+</form>
 
   <div class="nav">
     <a href="/index.html">Home</a>

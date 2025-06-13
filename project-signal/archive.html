@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Signal Archive</title>
+  <style>
+    body {
+      background-color: #0d0d0d;
+      color: #f1f1f1;
+      font-family: 'Segoe UI', sans-serif;
+      padding: 2rem;
+    }
+    h1 {
+      color: #ff4c4c;
+      text-align: center;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 20px 0;
+      border: 1px solid #444;
+      border-radius: 5px;
+      background-color: #1a1a1a;
+      color: #fff;
+    }
+    .signal {
+      background: #1c1c1c;
+      border: 1px solid #333;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      padding: 1rem;
+    }
+    .timestamp {
+      font-size: 0.9rem;
+      color: #aaa;
+    }
+    .name {
+      font-weight: bold;
+      color: #00ffaa;
+    }
+  </style>
+</head>
+<body>
+  <h1>🛰️ Project SIGNAL Archive</h1>
+  <input type="text" id="filter" placeholder="Filter by name or keyword..." />
+
+  <div id="signals"></div>
+
+  <script>
+    const signalsDiv = document.getElementById('signals');
+    const filterInput = document.getElementById('filter');
+
+    async function loadSignals() {
+      try {
+        const res = await fetch('/data/submissions.json');
+        const signals = await res.json();
+        renderSignals(signals.reverse());
+
+        filterInput.addEventListener('input', () => {
+          const term = filterInput.value.toLowerCase();
+          const filtered = signals.filter(entry =>
+            entry.name.toLowerCase().includes(term) ||
+            entry.message.toLowerCase().includes(term)
+          );
+          renderSignals(filtered);
+        });
+      } catch (err) {
+        signalsDiv.innerHTML = "<p>Error loading signals.</p>";
+        console.error(err);
+      }
+    }
+
+    function renderSignals(list) {
+      signalsDiv.innerHTML = list.map(entry => `
+        <div class="signal">
+          <div class="timestamp">${new Date(entry.timestamp).toLocaleString()}</div>
+          <div class="name">${entry.name}</div>
+          <div class="message">${entry.message}</div>
+        </div>
+      `).join('');
+    }
+
+    loadSignals();
+  </script>
+</body>
+</html>

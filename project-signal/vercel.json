@@ -1,0 +1,8 @@
+{
+  "routes": [
+    {
+      "src": "/api/submit-to-signal",
+      "dest": "api/submit-to-signal.js"
+    }
+  ]
+}
